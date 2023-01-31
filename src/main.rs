@@ -21,17 +21,19 @@ fn main() -> Result<(), Box<dyn Error>> {
         lat: 21,
     };
 
-//    let mut pin = Gpio::new()?.get(pins.lines[0])?.into_output();
-
     let mut panel = Hub75Panel::new(64, 32, pins);
 
-    let start = Instant::now();
+    let thread_handle = thread::spawn(move || {
+        let start = Instant::now();
 
-    while start.elapsed().as_secs() < 5 {
-        panel.test();
-    }
+        while start.elapsed().as_secs() < 5 {
+            panel.test();
+        }
+
+        panel.blank();
+    });
     
-    panel.blank();
+    thread_handle.join();
 
     Ok(())
 }
