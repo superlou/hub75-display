@@ -1,6 +1,7 @@
 use std::thread;
 use std::time::Duration;
 use rppal::gpio::{Gpio, OutputPin};
+use crate::img_buffer::ImgBuffer;
 
 pub struct Hub75PinNums<const LC: usize> {
     pub lines: [u8; LC],
@@ -55,12 +56,67 @@ pub struct Hub75Panel<const LC: usize> {
 	cols: usize,
 	rows: usize,
 	pins: Hub75Pins<LC>,
+	active_row: usize,
 }
 
 impl<const LC: usize> Hub75Panel<LC> {
 	pub fn new(cols: usize, rows: usize, pins: Hub75PinNums<LC>) -> Hub75Panel<LC> {
 		let pins = Hub75Pins::from_pin_nums(&pins);
-		Hub75Panel {cols, rows, pins}
+		Hub75Panel {cols, rows, pins, active_row: 0}
+	}
+
+	pub fn strobe_row(&mut self, img_buffer: &ImgBuffer) {
+		let row_data = img_buffer.get_display_row(self.active_row);
+
+		for i in 0..self.cols {
+			self.set_pins_for_byte(row_data[i]);
+			self.clock();
+		}
+
+		self.pins.oe.set_high();
+		self.latch();
+		self.select_row(self.active_row);
+		self.pins.oe.set_low();
+
+		self.active_row = (self.active_row + 1) % 16;
+	}
+
+	fn set_pins_for_byte(&mut self, byte: u8) {
+		if byte & 1 != 0 {
+			self.pins.r[0].set_high()
+		} else {
+			self.pins.r[0].set_low();
+		}
+			
+		if byte & 2 != 0 {
+			self.pins.g[0].set_high()
+		} else {
+			self.pins.g[0].set_low();
+		}
+
+		if byte & 4 != 0 {
+			self.pins.b[0].set_high()
+		} else {
+			self.pins.b[0].set_low();
+		}
+
+		if byte & 8 != 0 {
+			self.pins.r[1].set_high()
+		} else {
+			self.pins.r[1].set_low();
+		}
+
+		if byte & 16 != 0 {
+			self.pins.g[1].set_high()
+		} else {
+			self.pins.g[1].set_low();
+		}
+
+		if byte & 32 != 0 {
+			self.pins.b[1].set_high()
+		} else {
+			self.pins.b[1].set_low();
+		}
 	}
 
 	pub fn test(&mut self) {
