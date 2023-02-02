@@ -1,11 +1,12 @@
 use std::error::Error;
 use std::thread;
-use std::time::Instant;
+use std::time::{Instant, Duration};
 use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
 
 use rppal::gpio::Gpio;
 use rppal::system::DeviceInfo;
+use spin_sleep::LoopHelper;
 
 mod hub75;
 use hub75::{Hub75PinNums, Hub75Panel};
@@ -46,11 +47,22 @@ fn main() -> Result<(), Box<dyn Error>> {
     image.set_pixel(50, 10, Color::Purple);
     image.set_pixel(60, 20, Color::Teal);
 
+    let mut loop_helper = LoopHelper::builder()
+        .report_interval_s(1.0)
+        .build_with_target_rate(1000.0);
+
     let thread_handle = thread::spawn(move || {
         panel.blank();
 
         while running.load(Ordering::SeqCst) {
+            loop_helper.loop_start();
+
+            if let Some(fps) = loop_helper.report_rate() {
+                println!("Rate: {}", fps);
+            }
+            
             panel.strobe_row(&image);
+            loop_helper.loop_sleep();
         }
 
         panel.blank();
