@@ -1,4 +1,6 @@
+use std::time::Duration;
 use rppal::gpio::{Gpio, OutputPin};
+use spin_sleep::sleep;
 use crate::img_buffer::ImgBuffer;
 
 pub struct Hub75PinNums<const LC: usize> {
@@ -163,14 +165,13 @@ impl<const LC: usize> Hub75Panel<LC> {
 
 	pub fn clock(&mut self) {
 		self.pins.clk.set_high();
-		//thread::sleep(Duration::from_micros(1));
+		sleep(Duration::new(0, 1));
 		self.pins.clk.set_low();
-		//thread::sleep(Duration::from_micros(1));
 	}
 
 	pub fn latch(&mut self) {
 		self.pins.lat.set_high();
-		//thread::sleep(Duration::from_micros(1));
+		sleep(Duration::new(0, 1));
 		self.pins.lat.set_low();
 	}
 
