@@ -1,6 +1,6 @@
 use std::thread;
 use std::time::Duration;
-use rppal::gpio::{Gpio, OutputPin};
+use rppal::gpio::{Gpio, OutputPin, Level};
 use crate::img_buffer::ImgBuffer;
 
 pub struct Hub75PinNums<const LC: usize> {
@@ -82,41 +82,12 @@ impl<const LC: usize> Hub75Panel<LC> {
 	}
 
 	fn set_pins_for_byte(&mut self, byte: u8) {
-		if byte & 1 != 0 {
-			self.pins.r[0].set_high()
-		} else {
-			self.pins.r[0].set_low();
-		}
-			
-		if byte & 2 != 0 {
-			self.pins.g[0].set_high()
-		} else {
-			self.pins.g[0].set_low();
-		}
-
-		if byte & 4 != 0 {
-			self.pins.b[0].set_high()
-		} else {
-			self.pins.b[0].set_low();
-		}
-
-		if byte & 8 != 0 {
-			self.pins.r[1].set_high()
-		} else {
-			self.pins.r[1].set_low();
-		}
-
-		if byte & 16 != 0 {
-			self.pins.g[1].set_high()
-		} else {
-			self.pins.g[1].set_low();
-		}
-
-		if byte & 32 != 0 {
-			self.pins.b[1].set_high()
-		} else {
-			self.pins.b[1].set_low();
-		}
+		self.pins.r[0].write((byte & 1 != 0).into());
+		self.pins.g[0].write((byte & 2 != 0).into());
+		self.pins.b[0].write((byte & 4 != 0).into());
+		self.pins.r[1].write((byte & 8 != 0).into());
+		self.pins.g[1].write((byte & 16 != 0).into());
+		self.pins.b[1].write((byte & 32 != 0).into());
 	}
 
 	pub fn test(&mut self) {
