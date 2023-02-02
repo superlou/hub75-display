@@ -46,7 +46,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     image.set_pixel(60, 20, Color::Teal);
 
     let mut loop_helper = LoopHelper::builder()
-        .report_interval_s(1.0)
+        .report_interval_s(5.0)
         .build_with_target_rate(1000.0);
 
     let thread_handle = thread::spawn(move || {
@@ -55,11 +55,12 @@ fn main() -> Result<(), Box<dyn Error>> {
         while running.load(Ordering::SeqCst) {
             loop_helper.loop_start();
 
+            panel.strobe_row(&image);
+
             if let Some(fps) = loop_helper.report_rate() {
                 println!("Rate: {}", fps);
             }
             
-            panel.strobe_row(&image);
             loop_helper.loop_sleep();
         }
 
