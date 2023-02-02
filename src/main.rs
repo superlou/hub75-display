@@ -2,6 +2,7 @@ use std::error::Error;
 use std::thread;
 use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::mpsc::channel;
 
 use rppal::system::DeviceInfo;
 use spin_sleep::LoopHelper;
@@ -46,28 +47,44 @@ fn main() -> Result<(), Box<dyn Error>> {
     image.set_pixel(60, 20, Color::Teal);
 
     let mut loop_helper = LoopHelper::builder()
-        .report_interval_s(5.0)
+        .report_interval_s(1.0)
         .build_with_target_rate(1000.0);
 
-    let thread_handle = thread::spawn(move || {
-        panel.blank();
+    let (sender, receiver) = channel();
+    
+    let strobe_handle = thread::spawn({
+        let running = running.clone();
+        move || {
+            panel.blank();
 
-        while running.load(Ordering::SeqCst) {
-            loop_helper.loop_start();
+            while running.load(Ordering::SeqCst) {
+                loop_helper.loop_start();
 
-            panel.strobe_row(&image);
+                panel.strobe_row(&image);
 
-            if let Some(fps) = loop_helper.report_rate() {
-                println!("Rate: {}", fps);
-            }
+                if let Some(rate) = loop_helper.report_rate() {
+                    sender.send(rate).unwrap();
+                }
             
-            loop_helper.loop_sleep();
-        }
+                loop_helper.loop_sleep();
+            }
 
-        panel.blank();
+            panel.blank();
+        }
+    });
+
+    let info_handle = thread::spawn({
+        let running = running.clone();
+        move || {
+            while running.load(Ordering::SeqCst) {
+                let rate = receiver.recv().unwrap();
+                println!("Rate: {}", rate);
+            }
+        }
     });
     
-    thread_handle.join().expect("Thread panicked!");
+    strobe_handle.join().expect("Strobe thread panicked!");
+    info_handle.join().expect("Info thread panicked!");
 
     Ok(())
 }
