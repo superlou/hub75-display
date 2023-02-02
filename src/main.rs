@@ -1,6 +1,8 @@
 use std::error::Error;
 use std::thread;
 use std::time::Instant;
+use std::sync::Arc;
+use std::sync::atomic::{AtomicBool, Ordering};
 
 use rppal::gpio::Gpio;
 use rppal::system::DeviceInfo;
@@ -12,6 +14,16 @@ mod img_buffer;
 use img_buffer::{ImgBuffer, Color};
 
 fn main() -> Result<(), Box<dyn Error>> {
+    let running = Arc::new(AtomicBool::new(true));
+
+    ctrlc::set_handler({
+        let running = running.clone();
+        move || {
+            println!("Shutting down.");
+            running.store(false, Ordering::SeqCst);
+        }
+    });
+
     println!("Device info: {}", DeviceInfo::new()?.model());
 
     let pins = Hub75PinNums {
@@ -35,10 +47,9 @@ fn main() -> Result<(), Box<dyn Error>> {
     image.set_pixel(60, 20, Color::Teal);
 
     let thread_handle = thread::spawn(move || {
-        let start = Instant::now();
         panel.blank();
 
-        while start.elapsed().as_secs() < 5 {
+        while running.load(Ordering::SeqCst) {
             panel.strobe_row(&image);
         }
 
