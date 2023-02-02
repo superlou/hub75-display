@@ -28,26 +28,26 @@ impl<const LC: usize> Hub75Pins<LC> {
 		let gpio = Gpio::new().unwrap();
 
 		let lines: [OutputPin; LC] = pin_nums.lines.into_iter().map(|x|
-			 gpio.get(x).expect("Couldn't get pin").into_output()
+			 gpio.get(x).expect("Couldn't get pin").into_output_low()
 		).collect::<Vec<OutputPin>>().try_into().unwrap();
 		
 		let r: [OutputPin; 2] = pin_nums.r.into_iter().map(|x|
-			 gpio.get(x).unwrap().into_output()
+			 gpio.get(x).unwrap().into_output_low()
 		).collect::<Vec<OutputPin>>().try_into().unwrap();
 
 		let g: [OutputPin; 2] = pin_nums.g.into_iter().map(|x|
-			 gpio.get(x).unwrap().into_output()
+			 gpio.get(x).unwrap().into_output_low()
 		).collect::<Vec<OutputPin>>().try_into().unwrap();
 
 		let b: [OutputPin; 2] = pin_nums.b.into_iter().map(|x|
-			 gpio.get(x).unwrap().into_output()
+			 gpio.get(x).unwrap().into_output_low()
 		).collect::<Vec<OutputPin>>().try_into().unwrap();
 
 		Hub75Pins {
 			lines, r, g, b,
-			clk: gpio.get(pin_nums.clk).unwrap().into_output(),
-			lat: gpio.get(pin_nums.lat).unwrap().into_output(),
-			oe: gpio.get(pin_nums.oe).unwrap().into_output(),
+			clk: gpio.get(pin_nums.clk).unwrap().into_output_low(),
+			lat: gpio.get(pin_nums.lat).unwrap().into_output_low(),
+			oe: gpio.get(pin_nums.oe).unwrap().into_output_low(),
 		}
 	}
 }
