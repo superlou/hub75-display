@@ -1,6 +1,4 @@
-use std::thread;
-use std::time::Duration;
-use rppal::gpio::{Gpio, OutputPin, Level};
+use rppal::gpio::{Gpio, OutputPin};
 use crate::img_buffer::ImgBuffer;
 
 pub struct Hub75PinNums<const LC: usize> {
@@ -88,29 +86,6 @@ impl<const LC: usize> Hub75Panel<LC> {
 		self.pins.r[1].write((byte & 8 != 0).into());
 		self.pins.g[1].write((byte & 16 != 0).into());
 		self.pins.b[1].write((byte & 32 != 0).into());
-	}
-
-	pub fn test(&mut self) {
-		for i in 0..(self.rows / 2) {
-			for i in 0..self.cols {
-				if i < 32 {
-					self.pins.r[0].set_high();
-					self.pins.b[1].set_high();
-					self.pins.g[0].set_low();
-					self.pins.g[1].set_low();
-				} else {
-					self.pins.g[0].set_high();
-					self.pins.g[1].set_high();
-				}
-				
-				self.clock();
-			}
-
-			self.pins.oe.set_high();
-			self.latch();
-			self.select_row(i);
-			self.pins.oe.set_low();
-		}
 	}
 
 	pub fn select_row(&mut self, row: usize) {

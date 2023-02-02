@@ -1,10 +1,8 @@
 use std::error::Error;
 use std::thread;
-use std::time::{Instant, Duration};
 use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
 
-use rppal::gpio::Gpio;
 use rppal::system::DeviceInfo;
 use spin_sleep::LoopHelper;
 
@@ -23,7 +21,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             println!("Shutting down.");
             running.store(false, Ordering::SeqCst);
         }
-    });
+    }).expect("Error setting ctrl-c handler!");
 
     println!("Device info: {}", DeviceInfo::new()?.model());
 
@@ -68,7 +66,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         panel.blank();
     });
     
-    thread_handle.join();
+    thread_handle.join().expect("Thread panicked!");
 
     Ok(())
 }
