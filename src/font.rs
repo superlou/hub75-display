@@ -103,10 +103,10 @@ mod tests {
     use super::*;
 
     #[test]
-    fn it_can_load() {
+    fn it_can_load_57() {
         let font = Font::load("fonts/57.toml").unwrap();
+        
         let font_char = font.char(&'A').unwrap();
-
         assert_eq!(font.len(), 65);
         assert_eq!(font_char.width(), 5);
         assert_eq!(font_char.height(), 7);
@@ -130,5 +130,20 @@ mod tests {
               0, 255,   0,   0, 255,
             255, 255, 255, 255,   0,
         ]);        
+    }
+
+    #[test]
+    fn it_can_load_metronorth() {
+        let font = Font::load("fonts/metronorth.toml").unwrap();
+        let font_char = font.char(&'A').unwrap();
+        assert_eq!(font_char.data(), &vec![
+              0, 255, 255,   0,
+            255,   0,   0, 255,
+            255,   0,   0, 255,
+            255, 255, 255, 255,
+            255,   0,   0, 255,
+            255,   0,   0, 255,
+            255,   0,   0, 255,
+        ]);           
     }
 }
