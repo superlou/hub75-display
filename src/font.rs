@@ -60,7 +60,7 @@ impl Font {
                 }
             }
 
-            let font_char = FontChar::new(config.char_width, config.char_height, data);
+            let font_char = FontChar::new(width, height, data);
             char_map.insert(*c, font_char);
         }
         
@@ -144,6 +144,18 @@ mod tests {
             255,   0,   0, 255,
             255,   0,   0, 255,
             255,   0,   0, 255,
-        ]);           
+        ]);
+
+        let font_char = font.char(&'I').unwrap();
+        assert_eq!(font_char.width(), 1);
+        assert_eq!(font_char.data(), &vec![
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+        ]);
     }
 }
