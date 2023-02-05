@@ -109,6 +109,8 @@ impl PPM {
                                 .map(|x| Pixel::new(x))
                                 .collect();
         
+        // assert_eq!(width * height, pixels.len());
+
         PPM {
             format, width, height, max,
             pixels: pixels,
@@ -124,9 +126,9 @@ impl PPM {
         &self.format
     }
 
-    pub fn pixel(&self, x: usize, y: usize) -> &Pixel {
+    pub fn pixel(&self, x: usize, y: usize) -> Option<&Pixel> {
         let index = y * self.width + x;
-        &self.pixels[index]
+        self.pixels.get(index)
     }
 }
 
@@ -145,8 +147,8 @@ mod tests {
         assert_eq!(ppm.height, 788);
         assert_eq!(ppm.max, 255);
         assert_eq!(ppm.pixels.len(), 2);
-        assert_eq!(ppm.pixel(0, 0), &Pixel::new(&[1, 2, 3]));
-        assert_eq!(ppm.pixel(1, 0), &Pixel::new(&[4, 5, 6]));
+        assert_eq!(ppm.pixel(0, 0), Some(&Pixel::new(&[1, 2, 3])));
+        assert_eq!(ppm.pixel(1, 0), Some(&Pixel::new(&[4, 5, 6])));
     }
     
     #[test]
@@ -164,8 +166,8 @@ mod tests {
         assert_eq!(ppm.height, 788);
         assert_eq!(ppm.max, 255);
         assert_eq!(ppm.pixels.len(), 2);
-        assert_eq!(ppm.pixel(0, 0), &Pixel::new(&[1, 2, 3]));
-        assert_eq!(ppm.pixel(1, 0), &Pixel::new(&[4, 5, 6]));
+        assert_eq!(ppm.pixel(0, 0), Some(&Pixel::new(&[1, 2, 3])));
+        assert_eq!(ppm.pixel(1, 0), Some(&Pixel::new(&[4, 5, 6])));
     }
     
     #[test]
@@ -184,8 +186,8 @@ mod tests {
         assert_eq!(ppm.height, 788);
         assert_eq!(ppm.max, 255);
         assert_eq!(ppm.pixels.len(), 2);
-        assert_eq!(ppm.pixel(0, 0), &Pixel::new(&[1, 2, 3]));
-        assert_eq!(ppm.pixel(1, 0), &Pixel::new(&[4, 5, 6]));
+        assert_eq!(ppm.pixel(0, 0), Some(&Pixel::new(&[1, 2, 3])));
+        assert_eq!(ppm.pixel(1, 0), Some(&Pixel::new(&[4, 5, 6])));
     }
 
     #[test]
@@ -198,10 +200,10 @@ mod tests {
 
         assert_eq!(ppm.width, 2);
         assert_eq!(ppm.height, 2);
-        assert_eq!(ppm.pixel(0, 0), &Pixel::new(&[1, 2, 3]));
-        assert_eq!(ppm.pixel(1, 0), &Pixel::new(&[4, 5, 6]));
-        assert_eq!(ppm.pixel(0, 1), &Pixel::new(&[122, 123, 124]));
-        assert_eq!(ppm.pixel(1, 1), &Pixel::new(&[125, 126, 127]));
+        assert_eq!(ppm.pixel(0, 0), Some(&Pixel::new(&[1, 2, 3])));
+        assert_eq!(ppm.pixel(1, 0), Some(&Pixel::new(&[4, 5, 6])));
+        assert_eq!(ppm.pixel(0, 1), Some(&Pixel::new(&[122, 123, 124])));
+        assert_eq!(ppm.pixel(1, 1), Some(&Pixel::new(&[125, 126, 127])));
     }
 
     #[test]

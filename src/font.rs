@@ -49,11 +49,12 @@ impl Font {
                 let x = (i % width) + x0;
                 let y = i / width + y0;
 
-                let pixel = image.pixel(x, y);
-                if pixel.is_black() {
-                    data.push(0u8);
-                } else {
-                    data.push(255u8);
+                if let Some(pixel) = image.pixel(x, y) {
+                    if pixel.is_black() {
+                        data.push(0u8);
+                    } else {
+                        data.push(255u8);
+                    }
                 }
             }
 
@@ -102,10 +103,12 @@ mod tests {
     #[test]
     fn it_can_load() {
         let font = Font::load("fonts/57.toml").unwrap();
-        assert_eq!(font.len(), 5);
-        assert_eq!(font.width(&'A'), 5);
-        assert_eq!(font.height(&'A'), 7);
-        assert_eq!(font.char_data(&'A'), &vec![
+        let font_char = font.char(&'A').unwrap();
+
+        assert_eq!(font.len(), 65);
+        assert_eq!(font_char.width(), 5);
+        assert_eq!(font_char.height(), 7);
+        assert_eq!(font_char.data(), &vec![
             0,     0, 255,   0,   0,
             0,   255,   0, 255,   0,
             255,   0,   0,   0, 255,
@@ -114,8 +117,9 @@ mod tests {
             255,   0,   0,   0, 255,
             255,   0,   0,   0, 255,
         ]);
-        
-        assert_eq!(font.char_data(&'D'), &vec![
+
+        let font_char = font.char(&'D').unwrap();
+        assert_eq!(font_char.data(), &vec![
             255, 255, 255, 255,   0,
               0, 255,   0,   0, 255,
               0, 255,   0,   0, 255,
