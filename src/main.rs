@@ -8,10 +8,12 @@ use rppal::system::DeviceInfo;
 use spin_sleep::LoopHelper;
 
 mod hub75;
-use hub75::{Hub75PinNums, Hub75Panel};
-
 mod img_buffer;
-use img_buffer::{ImgBuffer, Color, FontChar};
+mod font;
+mod ppm;
+
+use hub75::{Hub75PinNums, Hub75Panel};
+use img_buffer::{ImgBuffer, Color};
 use std::collections::HashMap;
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -47,18 +49,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     image.set_pixel(50, 10, Color::Purple);
     image.set_pixel(60, 20, Color::Teal);
 
-    
-    let mut font = HashMap::<char, FontChar>::new();
-    let charA = FontChar::new([
-        0, 0, 1, 0, 0,
-        0, 1, 0, 1, 0,
-        1, 0, 0, 0, 1,
-        1, 0, 0, 0, 1,
-        1, 1, 1, 1, 1,
-        1, 0, 0, 0, 1,
-        1, 0, 0, 0, 1,
-    ]);
-    
+    let font = font::Font::load("fonts/57.toml")?;
     image.draw_character('A', &font, 0, 0, Color::Blue);
 
     let mut loop_helper = LoopHelper::builder()

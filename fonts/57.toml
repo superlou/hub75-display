@@ -1,0 +1,18 @@
+image = "fonts/57.ppm"
+char_width = 5
+char_height = 7
+
+[chars.A]
+pos = [0, 0]
+
+[chars.B]
+pos = [6, 0]
+
+[chars.C]
+pos = [12, 0]
+
+[chars.D]
+pos = [18, 0]
+
+[chars.E]
+pos = [24, 0]

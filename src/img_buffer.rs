@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use crate::font::Font;
 
 pub struct ImgBuffer {
     plane: [u8; 32*64],
@@ -48,21 +48,7 @@ impl ImgBuffer {
         self.plane[i] = data;
     }
 
-    pub fn draw_character(&mut self, c: char, font: &HashMap<char, FontChar>, x: usize, y: usize, color: Color) {
+    pub fn draw_character(&mut self, c: char, font: &Font, x: usize, y: usize, color: Color) {
         
-    }
-}
-
-pub struct FontChar {
-    width: usize,
-    height: usize,
-    data: [u8; 5*7],
-}
-
-impl FontChar {
-    pub fn new(data: [u8; 5*7]) -> Self {
-        Self {
-            width: 5, height: 7, data,
-        }
     }
 }
