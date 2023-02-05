@@ -6,6 +6,7 @@ pub struct ImgBuffer {
     cols: usize,
 }
 
+#[derive(Clone, Copy)]
 pub enum Color {
     Red = 0x01,
     Green = 0x02,
@@ -48,7 +49,17 @@ impl ImgBuffer {
         self.plane[i] = data;
     }
 
-    pub fn draw_character(&mut self, c: char, font: &Font, x: usize, y: usize, color: Color) {
-        
+    pub fn draw_char(&mut self, c: char, font: &Font, x0: usize, y0: usize, color: Color) {
+        let data = font.char_data(&c);
+        let width = font.width(&c);
+
+        for (i, d) in data.iter().enumerate() {
+            let x = (i % width) + x0;
+            let y = (i / width) + y0;
+
+            if *d > 0 {
+                self.set_pixel(x, y, color);
+            }
+        }
     }
 }

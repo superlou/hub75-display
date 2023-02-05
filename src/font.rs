@@ -78,7 +78,7 @@ impl Font {
         self.char_map[c].height
     }
     
-    pub fn data(&self, c: &char) -> &Vec<u8> {
+    pub fn char_data(&self, c: &char) -> &Vec<u8> {
         &self.char_map[c].data
     }
 }
@@ -101,7 +101,7 @@ mod tests {
         assert_eq!(font.len(), 5);
         assert_eq!(font.width(&'A'), 5);
         assert_eq!(font.height(&'A'), 7);
-        assert_eq!(font.data(&'A'), &vec![
+        assert_eq!(font.char_data(&'A'), &vec![
             0,     0, 255,   0,   0,
             0,   255,   0, 255,   0,
             255,   0,   0,   0, 255,
@@ -111,7 +111,7 @@ mod tests {
             255,   0,   0,   0, 255,
         ]);
         
-        assert_eq!(font.data(&'D'), &vec![
+        assert_eq!(font.char_data(&'D'), &vec![
             255, 255, 255, 255,   0,
               0, 255,   0,   0, 255,
               0, 255,   0,   0, 255,

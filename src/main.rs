@@ -14,7 +14,6 @@ mod ppm;
 
 use hub75::{Hub75PinNums, Hub75Panel};
 use img_buffer::{ImgBuffer, Color};
-use std::collections::HashMap;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let running = Arc::new(AtomicBool::new(true));
@@ -50,7 +49,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     image.set_pixel(60, 20, Color::Teal);
 
     let font = font::Font::load("fonts/57.toml")?;
-    image.draw_character('A', &font, 0, 0, Color::Blue);
+    image.draw_char('A', &font, 0, 0, Color::Blue);
 
     let mut loop_helper = LoopHelper::builder()
         .report_interval_s(1.0)
