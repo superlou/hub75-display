@@ -24,7 +24,9 @@ struct FontConfig {
 
 #[derive(Deserialize, Debug)]
 struct CharConfig {
-    pos: Vec<usize>
+    pos: Vec<usize>,
+    width: Option<usize>,
+    height: Option<usize>,
 }
 
 impl Font {
@@ -39,8 +41,8 @@ impl Font {
         for (c, char_config) in &config.chars {
             let x0 = char_config.pos[0];
             let y0 = char_config.pos[1];
-            let width = config.char_width;
-            let height = config.char_height;
+            let width = char_config.width.unwrap_or(config.char_width);
+            let height = char_config.height.unwrap_or(config.char_height);
             let num_pixels = width * height;
 
             let mut data = vec![];

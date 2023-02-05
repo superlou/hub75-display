@@ -1,0 +1,223 @@
+image = "fonts/metronorth.ppm"
+char_width = 4
+char_height = 7
+
+[chars.A]
+pos = [0, 0]
+
+[chars.B]
+pos = [6, 0]
+
+[chars.C]
+pos = [12, 0]
+
+[chars.D]
+pos = [18, 0]
+
+[chars.E]
+pos = [24, 0]
+
+[chars.F]
+pos = [30, 0]
+
+[chars.G]
+pos = [36, 0]
+
+[chars.H]
+pos = [42, 0]
+
+[chars.I]
+pos = [48, 0]
+width = 1
+
+[chars.J]
+pos = [54, 0]
+
+[chars.K]
+pos = [60, 0]
+
+[chars.L]
+pos = [66, 0]
+
+[chars.M]
+pos = [72, 0]
+width = 5
+
+[chars.N]
+pos = [78, 0]
+
+[chars.O]
+pos = [84, 0]
+
+[chars.P]
+pos = [90, 0]
+
+[chars.Q]
+pos = [96, 0]
+width = 5
+
+[chars.R]
+pos = [102, 0]
+
+[chars.S]
+pos = [108, 0]
+
+[chars.T]
+pos = [114, 0]
+width = 5
+
+[chars.U]
+pos = [120, 0]
+
+[chars.V]
+pos = [126, 0]
+width = 5
+
+[chars.W]
+pos = [132, 0]
+width = 5
+
+[chars.X]
+pos = [138, 0]
+width = 5
+
+[chars.Y]
+pos = [144, 0]
+width = 5
+
+[chars.Z]
+pos = [150, 0]
+width = 5
+
+[chars.a]
+pos = [0, 8]
+width = 5
+
+[chars.b]
+pos = [6, 8]
+
+[chars.c]
+pos = [12, 8]
+
+[chars.d]
+pos = [18, 8]
+
+[chars.e]
+pos = [24, 8]
+
+[chars.f]
+pos = [30, 8]
+
+[chars.g]
+pos = [36, 8]
+
+[chars.h]
+pos = [42, 8]
+
+[chars.i]
+pos = [48, 8]
+width = 1
+
+[chars.j]
+pos = [54, 8]
+
+[chars.k]
+pos = [60, 8]
+
+[chars.l]
+pos = [66, 8]
+width = 1
+
+[chars.m]
+pos = [72, 8]
+width = 5
+
+[chars.n]
+pos = [78, 8]
+
+[chars.o]
+pos = [84, 8]
+
+[chars.p]
+pos = [90, 8]
+
+[chars.q]
+pos = [96, 8]
+
+[chars.r]
+pos = [102, 8]
+
+[chars.s]
+pos = [108, 8]
+
+[chars.t]
+pos = [114, 8]
+width = 3
+
+[chars.u]
+pos = [120, 8]
+
+[chars.v]
+pos = [126, 8]
+width = 5
+
+[chars.w]
+pos = [132, 8]
+width = 5
+
+[chars.x]
+pos = [138, 8]
+width = 5
+
+[chars.y]
+pos = [144, 8]
+
+[chars.z]
+pos = [150, 8]
+width = 5
+
+[chars.0]
+pos = [0, 16]
+
+[chars.1]
+pos = [6, 16]
+
+[chars.2]
+pos = [12, 16]
+
+[chars.3]
+pos = [18, 16]
+
+[chars.4]
+pos = [24, 16]
+
+[chars.5]
+pos = [30, 16]
+
+[chars.6]
+pos = [36, 16]
+
+[chars.7]
+pos = [42, 16]
+
+[chars.8]
+pos = [48, 16]
+
+[chars.9]
+pos = [54, 16]
+
+[chars."."]
+pos = [60, 16]
+width = 3
+
+[chars.","]
+pos = [66, 16]
+width = 2
+
+[chars.":"]
+pos = [72, 16]
+width = 1
+
+[chars."-"]
+pos = [78, 16]
+width = 3
