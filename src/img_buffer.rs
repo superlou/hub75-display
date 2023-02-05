@@ -62,4 +62,14 @@ impl ImgBuffer {
             }
         }
     }
+
+    pub fn draw_str(&mut self, text: &str, font: &Font, x0: usize, y0: usize, color: Color) {
+        let mut x = x0;
+        let char_spacing = 1;
+
+        for c in text.chars() {
+            self.draw_char(c, font, x, y0, color);
+            x += font.width(&c) + char_spacing;
+        }
+    }
 }

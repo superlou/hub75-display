@@ -49,7 +49,9 @@ fn main() -> Result<(), Box<dyn Error>> {
     image.set_pixel(60, 20, Color::Teal);
 
     let font = font::Font::load("fonts/57.toml")?;
-    image.draw_char('A', &font, 0, 0, Color::Blue);
+    // image.draw_char('A', &font, 0, 0, Color::Blue);
+    // image.draw_char('B', &font, 6, 0, Color::White);
+    image.draw_str("ABCDE", &font, 0, 0, Color::Yellow);
 
     let mut loop_helper = LoopHelper::builder()
         .report_interval_s(1.0)
