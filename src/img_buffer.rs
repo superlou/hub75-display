@@ -1,7 +1,7 @@
 use crate::font::{Font, FontChar};
 
 pub struct ImgBuffer {
-    plane: [u8; 32*64],
+    plane: Vec<u8>,
     rows: usize,
     cols: usize,
 }
@@ -18,11 +18,11 @@ pub enum Color {
 }
 
 impl ImgBuffer {
-    pub fn new() -> ImgBuffer {
+    pub fn new(cols: usize, rows: usize) -> ImgBuffer {
         ImgBuffer {
-            plane: [0; 64*32],
-            rows: 32,
-            cols: 64,
+            plane: vec![0; cols*rows],
+            rows,
+            cols,
         }
     }
 

@@ -38,8 +38,8 @@ fn main() -> Result<(), Box<dyn Error>> {
         lat: 21,
     };
 
-    let mut panel = Hub75Panel::new(64, 32, pins);
-    let mut image = ImgBuffer::new();
+    let mut panel = Hub75Panel::new(128, 32, pins);
+    let mut image = ImgBuffer::new(128, 32);
     // image.set_pixel(0, 0, Color::Red);
     // image.set_pixel(10, 10, Color::Green);
     // image.set_pixel(20, 20, Color::Blue);
@@ -49,10 +49,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     // image.set_pixel(60, 20, Color::Teal);
 
     let font = font::Font::load("fonts/57.toml")?;
-    image.draw_str("ABCDEFGHIJ", &font, 0, 0, Color::Red);
-    image.draw_str("KLMNOPQRST", &font, 0, 8, Color::Green);
-    image.draw_str("UVWXYZabcd", &font, 0, 16, Color::Blue);
-    image.draw_str("efghijklmn", &font, 0, 24, Color::Yellow);
+    image.draw_str("ABCDEFGHIJKLMNOPQRST", &font, 0, 0, Color::Red);
+    image.draw_str("UVWXYZabcdefghijklmn", &font, 0, 8, Color::Green);
+    image.draw_str("opqrstuvwxyz01234567", &font, 0, 16, Color::Blue);
+    image.draw_str("89.,:", &font, 0, 24, Color::Yellow);
 
     let mut loop_helper = LoopHelper::builder()
         .report_interval_s(1.0)
@@ -85,8 +85,8 @@ fn main() -> Result<(), Box<dyn Error>> {
         let running = running.clone();
         move || {
             while running.load(Ordering::SeqCst) {
-                let _rate = receiver.recv().unwrap();
-                // println!("Rate: {}", rate);
+                let rate = receiver.recv().unwrap();
+                println!("Rate: {}", rate);
             }
         }
     });
