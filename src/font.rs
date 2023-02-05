@@ -31,11 +31,32 @@ impl Font {
     pub fn load(filename: &str) -> Result<Self, Box<dyn Error>> {
         let config_text = read_to_string(filename)?;
         let config: FontConfig = toml::from_str(&config_text)?;
-                
-        let mut char_map = HashMap::<char, FontChar>::new();  
+        
+        let image = PPM::load(&config.image)?;
+
+        let mut char_map = HashMap::<char, FontChar>::new();
         
         for (c, char_config) in &config.chars {
-            let data = vec![0];
+            let x0 = char_config.pos[0];
+            let y0 = char_config.pos[1];
+            let width = config.char_width;
+            let height = config.char_height;
+            let num_pixels = width * height;
+
+            let mut data = vec![];
+
+            for i in 0..num_pixels {
+                let x = (i % width) + x0;
+                let y = i / width + y0;
+
+                let pixel = image.pixel(x, y);
+                if pixel.is_black() {
+                    data.push(0u8);
+                } else {
+                    data.push(255u8);
+                }
+            }
+
             let font_char = FontChar::new(config.char_width, config.char_height, data);
             char_map.insert(*c, font_char);
         }
