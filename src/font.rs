@@ -8,7 +8,7 @@ pub struct Font {
     char_map: HashMap::<char, FontChar>,
 }
 
-struct FontChar {
+pub struct FontChar {
     width: usize,
     height: usize,
     data: Vec<u8>,
@@ -70,16 +70,8 @@ impl Font {
         self.char_map.len()
     }
     
-    pub fn width(&self, c: &char) -> usize {
-        self.char_map[c].width
-    }
-    
-    pub fn height(&self, c: &char) -> usize {
-        self.char_map[c].height
-    }
-    
-    pub fn char_data(&self, c: &char) -> &Vec<u8> {
-        &self.char_map[c].data
+    pub fn char(&self, c: &char) -> Option<&FontChar> {
+        self.char_map.get(c)
     }
 }
 
@@ -88,6 +80,18 @@ impl FontChar {
         Self {
             width, height, data,
         }
+    }
+
+    pub fn width(&self) -> usize {
+        self.width
+    }
+    
+    pub fn height(&self) -> usize {
+        self.height
+    }
+    
+    pub fn data(&self) -> &Vec<u8> {
+        &self.data
     }
 }
 

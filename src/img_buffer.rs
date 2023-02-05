@@ -1,4 +1,4 @@
-use crate::font::Font;
+use crate::font::{Font, FontChar};
 
 pub struct ImgBuffer {
     plane: [u8; 32*64],
@@ -49,9 +49,9 @@ impl ImgBuffer {
         self.plane[i] = data;
     }
 
-    pub fn draw_char(&mut self, c: char, font: &Font, x0: usize, y0: usize, color: Color) {
-        let data = font.char_data(&c);
-        let width = font.width(&c);
+    fn draw_font_char(&mut self, font_char: &FontChar, x0: usize, y0: usize, color: Color) {
+        let data = font_char.data();
+        let width = font_char.width();
 
         for (i, d) in data.iter().enumerate() {
             let x = (i % width) + x0;
@@ -68,8 +68,13 @@ impl ImgBuffer {
         let char_spacing = 1;
 
         for c in text.chars() {
-            self.draw_char(c, font, x, y0, color);
-            x += font.width(&c) + char_spacing;
+            match font.char(&c) {
+                Some(font_char) => {
+                    self.draw_font_char(font_char, x, y0, color);
+                    x += font_char.width() + char_spacing;
+                },
+                None => {}
+            }
         }
     }
 }
