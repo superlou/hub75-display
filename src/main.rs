@@ -15,6 +15,13 @@ mod ppm;
 use hub75::{Hub75PinNums, Hub75Panel};
 use img_buffer::{ImgBuffer, Color};
 
+fn draw_eta_line(image: &mut ImgBuffer, font: &font::Font, y: usize, time: &str, destination: &str, status: &str, track: &str) {
+    image.draw_str(time, font, 0, y, Color::Yellow);
+    image.draw_str(destination, font, 20, y, Color::Yellow);
+    image.draw_str(status, font, 84, y, Color::Yellow);
+    image.draw_str(track, font, 120, y, Color::Yellow);
+}
+
 fn main() -> Result<(), Box<dyn Error>> {
     let running = Arc::new(AtomicBool::new(true));
 
@@ -55,10 +62,18 @@ fn main() -> Result<(), Box<dyn Error>> {
     // image.draw_str("efghijklmn", &font57, 0, 24, Color::Yellow);
 
     let font_mta = font::Font::load("fonts/metronorth.toml")?;
-    image.draw_str("ABCDEFGHIJKLMNOPQRST", &font_mta, 0, 0, Color::Red);
-    image.draw_str("UVWXYZabcdefghijklmn", &font_mta, 0, 8, Color::Green);
-    image.draw_str("opqrstuvwxyz01234567", &font_mta, 0, 16, Color::Blue);
-    image.draw_str("89.,:-", &font_mta, 0, 24, Color::Yellow);
+    // image.draw_str("ABCDEFGHIJKLMNOPQRST", &font_mta, 0, 0, Color::Red);
+    // image.draw_str("UVWXYZabcdefghijklmn", &font_mta, 0, 8, Color::Green);
+    // image.draw_str("opqrstuvwxyz01234567", &font_mta, 0, 16, Color::Blue);
+    // image.draw_str("89.,:-", &font_mta, 0, 24, Color::Yellow);
+    image.draw_str("TIME", &font_mta, 0, 0, Color::Yellow);
+    image.draw_str("DESTINATION", &font_mta, 20, 0, Color::Yellow);
+    image.draw_str("STATUS", &font_mta, 84, 0, Color::Yellow);
+    image.draw_str("TK", &font_mta, 118, 0, Color::Yellow);
+
+    draw_eta_line(&mut image, &font_mta, 8, " 8:24", "New Haven", "On Time", "3");
+    draw_eta_line(&mut image, &font_mta, 16, " 8:27", "Stamford", "On Time", "4");
+    draw_eta_line(&mut image, &font_mta, 24, " 8:34", "Southeast", "On Time", "3");
 
     let mut loop_helper = LoopHelper::builder()
         .report_interval_s(1.0)
