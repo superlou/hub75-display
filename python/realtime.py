@@ -9,10 +9,21 @@ import gtfs_realtime_pb2 as gtfs_rt
 def trip_updates_for_stop(feed_message, stop_id):
     trips = []
 
-    trip_updates = [feed_entity.trip_update for feed_entity in feed_message.entity if feed_entity.HasField("trip_update")]
+    # For MNR, can only correlate TripUpdates to trips.txt via the
+    # vehicle label and trip_short_name
+    entities = [
+        feed_entity for feed_entity in feed_message.entity
+        if feed_entity.HasField("trip_update") and feed_entity.HasField("vehicle")
+    ]
 
-    for trip_update in trip_updates:
-        stop_time_updates = [stu for stu in trip_update.stop_time_update if stu.stop_id == stop_id]
+    for entity in entities:
+        trip_update = entity.trip_update
+        vehicle_position = entity.vehicle
+
+        stop_time_updates = [
+            stu for stu in entity.trip_update.stop_time_update
+            if stu.stop_id == stop_id
+        ]
 
         if len(stop_time_updates) > 0:
             trip = {
@@ -21,6 +32,7 @@ def trip_updates_for_stop(feed_message, stop_id):
                 "direction_id": trip_update.trip.direction_id,
                 "start_time": trip_update.trip.start_time,
                 "start_date": trip_update.trip.start_date,
+                "vehicle_label": vehicle_position.vehicle.label,
                 "schedule_relationship": gtfs_rt.TripDescriptor.ScheduleRelationship.Name(trip_update.trip.schedule_relationship),
                 "updates": [
                     {
@@ -50,10 +62,6 @@ def main():
     feed_msg = gtfs_rt.FeedMessage()
     feed_msg.ParseFromString(response.content)
     
-    # print(msg)
-
-    trips_updates = []
-
     print(feed_msg.header)
     print(f"{len(feed_msg.entity)} entities in FeedMessage")
     trip_updates = trip_updates_for_stop(feed_msg, "111")
