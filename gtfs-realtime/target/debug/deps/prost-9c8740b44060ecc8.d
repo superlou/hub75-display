@@ -1,0 +1,12 @@
+/home/lsimons/workspace/hub75-display/gtfs-realtime/target/debug/deps/prost-9c8740b44060ecc8.rmeta: /home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/lib.rs /home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/error.rs /home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/message.rs /home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/types.rs /home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/encoding.rs /home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/../README.md
+
+/home/lsimons/workspace/hub75-display/gtfs-realtime/target/debug/deps/libprost-9c8740b44060ecc8.rlib: /home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/lib.rs /home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/error.rs /home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/message.rs /home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/types.rs /home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/encoding.rs /home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/../README.md
+
+/home/lsimons/workspace/hub75-display/gtfs-realtime/target/debug/deps/prost-9c8740b44060ecc8.d: /home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/lib.rs /home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/error.rs /home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/message.rs /home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/types.rs /home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/encoding.rs /home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/../README.md
+
+/home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/lib.rs:
+/home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/error.rs:
+/home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/message.rs:
+/home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/types.rs:
+/home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/encoding.rs:
+/home/lsimons/.cargo/registry/src/github.com-1ecc6299db9ec823/prost-0.11.6/src/../README.md:

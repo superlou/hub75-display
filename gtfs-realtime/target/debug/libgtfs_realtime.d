@@ -1,0 +1,1 @@
+/home/lsimons/workspace/hub75-display/gtfs-realtime/target/debug/libgtfs_realtime.rlib: /home/lsimons/workspace/hub75-display/gtfs-realtime/build.rs /home/lsimons/workspace/hub75-display/gtfs-realtime/src/lib.rs

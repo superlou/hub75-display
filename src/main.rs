@@ -3,7 +3,9 @@ use std::thread;
 use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::mpsc::channel;
+use std::env;
 
+use dotenv::dotenv;
 use rppal::system::DeviceInfo;
 use spin_sleep::LoopHelper;
 
@@ -11,9 +13,12 @@ mod hub75;
 mod img_buffer;
 mod font;
 mod ppm;
+mod mta;
 
 use hub75::{Hub75PinNums, Hub75Panel};
 use img_buffer::{ImgBuffer, Color};
+
+use crate::mta::MTAStatic;
 
 fn draw_eta_line(image: &mut ImgBuffer, font: &font::Font, y: usize, time: &str, destination: &str, status: &str, track: &str) {
     image.draw_str(time, font, 0, y, Color::Yellow);
@@ -45,6 +50,12 @@ fn main() -> Result<(), Box<dyn Error>> {
         lat: 21,
     };
 
+    dotenv().ok();
+    let key = env::var("MTA_API_KEY").expect("MTA_API_KEY must be set!");
+    let mta = mta::MTA::new(&key);
+    let _ = mta.get_rt();
+    let _ = MTAStatic::new().load();
+    
     let mut panel = Hub75Panel::new(128, 32, pins);
     let mut image = ImgBuffer::new(128, 32);
     // image.set_pixel(0, 0, Color::Red);

@@ -1,0 +1,1 @@
+window.ALL_CRATES = ["anyhow","bytes","either","gtfs_realtime","itertools","proc_macro2","prost","prost_derive","quote","syn","unicode_ident"];

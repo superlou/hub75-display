@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["ScheduleRelationship","The relation between this trip and the static schedule. If a trip is done in accordance with temporary schedule, not reflected in GTFS, then it shouldn’t be marked as SCHEDULED, but likely as ADDED."]]};

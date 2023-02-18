@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["Cause","Cause of this alert."],["Effect","What is the effect of this problem on the affected entity."]]};

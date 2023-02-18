@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["CongestionLevel","Congestion level that is affecting this vehicle."],["OccupancyStatus","The degree of passenger occupancy of the vehicle. This field is still experimental, and subject to change. It may be formally adopted in the future."],["VehicleStopStatus",""]]};

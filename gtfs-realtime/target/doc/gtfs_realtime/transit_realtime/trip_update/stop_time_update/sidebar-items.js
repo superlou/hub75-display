@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["ScheduleRelationship","The relation between this StopTime and the static schedule."]]};
