@@ -48,9 +48,7 @@ def trip_updates_for_stop(feed_message, stop_id):
     return trips
 
 
-def main():
-    load_dotenv("../.env")
-
+def get_feed_message():
     mnr_realtime_endpoint = (
         "https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/mnr%2Fgtfs-mnr"
     )
@@ -61,7 +59,13 @@ def main():
     response = requests.get(mnr_realtime_endpoint, headers=headers)
     feed_msg = gtfs_rt.FeedMessage()
     feed_msg.ParseFromString(response.content)
-    
+
+    return feed_msg
+
+
+def main():
+    load_dotenv("../.env")
+    feed_msg = get_feed_message()
     print(feed_msg.header)
     print(f"{len(feed_msg.entity)} entities in FeedMessage")
     trip_updates = trip_updates_for_stop(feed_msg, "111")

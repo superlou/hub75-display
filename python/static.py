@@ -12,6 +12,31 @@ def find_stop_id(station_name: str):
     return stop_id
 
 
+def prepare_stop_data():
+    calendar_dates = (
+        pl.scan_csv("calendar_dates.txt")
+        .with_columns(
+            pl.col("date").cast(str).str.strptime(pl.Date, "%Y%m%d")
+        )
+    )
+
+    trips = pl.scan_csv("trips.txt", dtypes={
+        "trip_short_name": str,
+    })
+
+    stop_times = pl.scan_csv("stop_times.txt", dtypes={
+        'track': str
+    })
+
+    return (
+        stop_times
+            .join(trips, on="trip_id")
+            .join(calendar_dates, on="service_id")
+            .select(["trip_short_name", "trip_headsign", "track", "stop_id",
+                     "date", "arrival_time"])
+    )
+
+
 def main():
     stop_id = find_stop_id("Mamaroneck")
     print("Stop ID:", stop_id)
